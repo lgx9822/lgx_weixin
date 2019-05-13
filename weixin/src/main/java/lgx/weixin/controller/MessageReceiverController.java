@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 @RestController
-@RequestMapping("/weixin/reciver")
+@RequestMapping("/kemao_3/weixin/reciver")
 public class MessageReceiverController {
 	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(MessageReceiverController.class);
 	
