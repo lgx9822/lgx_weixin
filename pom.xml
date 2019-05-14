@@ -22,5 +22,7 @@
 		<!-- 生成的报告使用的字符编码 -->
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
-<modules><module>weixin</module></modules>
+<modules><module>weixin</module>
+	<module>commons</module>
+</modules>
 </project>
