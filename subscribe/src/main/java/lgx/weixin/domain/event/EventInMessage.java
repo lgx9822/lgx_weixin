@@ -33,4 +33,13 @@ public class EventInMessage extends InMessage{
 	public void setEventKey(String eventKey) {
 		this.eventKey = eventKey;
 	}
+
+	@Override
+	public String toString() {
+		return "EventInMessage [event=" + event + ", eventKey=" + eventKey + ", getToUserName()=" + getToUserName()
+				+ ", getFromUserName()=" + getFromUserName() + ", getCreateTime()=" + getCreateTime()
+				+ ", getMsgType()=" + getMsgType() + ", getMsgId()=" + getMsgId() + "]";
+	}
+	
+	
 }
