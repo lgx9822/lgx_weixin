@@ -3,7 +3,9 @@ package lgx.weixin;
 import org.apache.logging.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -23,11 +25,32 @@ import lgx.weixin.processors.EventMessageProcessor;
 import lgx.weixin.service.JsonRedisSerializer;
 
 @SpringBootApplication
-public class EventProcessorApplication implements ApplicationContextAware{
-	private static final Logger LOG = (Logger) LoggerFactory.getLogger(EventProcessorApplication.class);
+public class SubscribeApplication implements ApplicationContextAware,CommandLineRunner,DisposableBean{
+	private static final Logger LOG = (Logger) LoggerFactory.getLogger(SubscribeApplication.class);
 	private ApplicationContext ctx;
-	
-	
+	private Object ruunnerMonitor = new Object();
+	@Override
+	public void destroy() throws Exception {
+		synchronized (ruunnerMonitor) {
+			ruunnerMonitor.notify();
+		}
+		
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		Thread t = new Thread(() -> {
+			synchronized (ruunnerMonitor) {
+				try {
+					ruunnerMonitor.wait();
+				}catch(InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		t.start();
+	}
+
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		ctx = applicationContext;
@@ -87,7 +110,8 @@ public class EventProcessorApplication implements ApplicationContextAware{
 		
 	}
 	public static void main(String[] args) {
-		SpringApplication.run(EventProcessorApplication.class, args);
+		SpringApplication.run(SubscribeApplication.class, args);
 	}
+
 
 }

@@ -10,13 +10,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lgx.weixin.domain.InMessage;
 @XmlRootElement(name = "xml")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class EventInMessage extends InMessage{
-	private static final long serialVersionUID = 1l;
-	
+public class EventInMessage extends InMessage {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@XmlElement(name = "Event")
 	@JsonProperty("Event")
 	private String event;
+
+	@XmlElement(name = "EventKey")
 	@JsonProperty("EventKey")
 	private String eventKey;
+
 	public EventInMessage() {
 		super("event");
 	}
@@ -24,12 +31,15 @@ public class EventInMessage extends InMessage{
 	public String getEvent() {
 		return event;
 	}
+
 	public void setEvent(String event) {
 		this.event = event;
 	}
+
 	public String getEventKey() {
 		return eventKey;
 	}
+
 	public void setEventKey(String eventKey) {
 		this.eventKey = eventKey;
 	}
@@ -40,6 +50,4 @@ public class EventInMessage extends InMessage{
 				+ ", getFromUserName()=" + getFromUserName() + ", getCreateTime()=" + getCreateTime()
 				+ ", getMsgType()=" + getMsgType() + ", getMsgId()=" + getMsgId() + "]";
 	}
-	
-	
 }
